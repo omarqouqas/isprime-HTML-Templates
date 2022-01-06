@@ -1,35 +1,6 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
-
-
-@app.route("/")
-def index():
-    html_form = """
-        <html><body>
-            <h1> Enter a number to find out whether it is a prime number. Google App Engine is awesome! </h1>
-                <div> To prove whether a number is a prime number, first try dividing it by 2,
-                    and see if you get a whole number. If you do, it can't be a prime number.
-                    If you don't get a whole number, next try dividing it by prime numbers: 3, 5, 7, 11 (9 is divisible by 3)
-                    and so on, always dividing by a prime number. 
-                </div>
-            <br>
-            <br>
-            <form action="" method="get">
-            Number: <input type="text" name="number">
-            <input type="submit" value="Is it prime?">
-                </form>
-        </body></html>"""
-
-    number = request.args.get("number", "")
-    if number:
-        isitprime = str(is_prime(number))
-        # print(isitprime)
-    else:
-        isitprime = ""
-
-    return html_form + isitprime
 
 
 def is_prime(number):
@@ -59,5 +30,22 @@ def is_prime(number):
             return str(number) + " is not a valid input. You need to enter an integer!"
 
 
+@app.route("/", methods=['GET', 'POST'])
+def index():
+
+    number = None
+
+    if request.method == 'POST':
+        number = request.form['number']
+        is_it_prime = is_prime(number)
+        if is_it_prime:
+            is_prime(number)
+            number = {
+                'number': number,
+                'is_it_prime': is_prime(number)
+            }
+    return render_template('index.html', number=number, )
+
+
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='127.0.0.14', port=8080, debug=True)

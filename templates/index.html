@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body>
+
+<h1> Enter a number to find out whether it is a prime number.</h1>
+<div>
+    To prove whether a number is a prime number, first try dividing it by 2,
+    and see if you get a whole number. If you do, it can't be a prime number.
+    If you don't get a whole number, next try dividing it by prime numbers: 3, 5, 7, 11 (9 is divisible by 3)
+    and so on, always dividing by a prime number.
+</div>
+<br>
+<br>
+
+<form action="" method="POST">
+    Number: <input type="text" name="number" class="input-number">
+    <input type="submit" value="Is it prime?" class="button">
+</form>
+{% if number %}
+<p>Entered Number: <b class="entered-value"> {{ number.number }} </b></p>
+<p> {{ number.is_it_prime }} </p>
+{% else %}
+<!-- html to render if params argument was None -->
+<p>Empty field, enter a number first!</p>
+{% endif %}
+</body>
+</html>

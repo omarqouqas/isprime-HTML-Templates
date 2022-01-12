@@ -4,8 +4,11 @@ app = Flask(__name__)
 
 
 def is_prime(number):
+
     while True:
         try:
+            if int(number) < 0:  # negative numbers are not prime
+                return str(number) + " is not a Prime number because it is less than 0"
             if number == 2:  # 2 is considered as a prime number
                 return str(number) + " is a Prime number."
             elif int(number) == 0 or int(number) == 1:
@@ -22,8 +25,6 @@ def is_prime(number):
             elif int(number) > 7 and int(number) % 7 == 0:
                 return str(number) + " is not a Prime number because it is divisible by 7. " + str(number) +\
                        "/" + str(7) + " = " + str(int(number) / 7)
-            elif int(number) < 0:  # negative numbers are not prime
-                return str(number) + " is not a Prime number because " + str(number) + " is less than 0"
             else:
                 return str(number) + " is a Prime number because it is divisible by itself and 1"
         except ValueError:
